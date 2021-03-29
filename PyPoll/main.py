@@ -10,15 +10,18 @@ vote_Correy = 0
 vote_Li = 0
 vote_Tooley = 0
 vote_percandi = []
-candi = []
+candi = ["Khan","Correy","Li","O'Tooley"]
+
+
+# TO INPUT CANDIDATE NAME IN ORDER AND CAPTURE AS A LIST
+
 with open(csvpath) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=",")
     csv_header = next(csv_reader)
     print(csv_header)
-    for candidate in range(4):
-        candidate = input("Name of the candidate?")
-        candi.append(candidate)
-    print(candi)
+    
+
+# TO FIND VOTE FOR EACH CANDIDATE AND TOTAL VOTE
 
     for row in csv_reader:
         if len(row[0]) > 0:
@@ -42,6 +45,7 @@ print(f'Total Vote: {vote}')
 # print(vote_Li)
 # print(vote_Tooley)
 
+
 #CALCULATE PERCENTAGE OF VOTE FOR EACH CANDIDATE.
 
 voteper_Khan = (vote_Khan/vote)*100
@@ -56,22 +60,41 @@ vote_percandi.append(voteper_Tooley)
 max = 0
 
 for i in range(len(vote_percandi)):
-    if vote_percandi[i] > max:
-        max = vote_percandi[i]
-    else:
-        max = max
+        if vote_percandi[i] > max:
+            max = vote_percandi[i]
+        else:
+            max = max
 
-        # if vote_percandi[i] = max:
-        #     print(index.vote_percandi) 
-
-print(max)
-
+# PRINT VOTE % AND VOTE COUNT FOR EACH CANDIDATE
 
 print(f'Khan: {voteper_Khan:.3f}% ({vote_Khan})')
 print(f'Correy: {voteper_Correy:.3f}% ({vote_Correy})')
 print(f'Li: {voteper_Li:.3f}% ({vote_Li})')
 print(f"O'Tooley: {voteper_Tooley:.3f}% ({vote_Tooley})")
-print(vote_percandi)
+# print(vote_percandi)
+
+# TO FIND THE WINNER
+
+j = 0
+max_index = 0
+for j in range(len(vote_percandi)):
+    if vote_percandi[j] == max:
+        print(f'Winner: {candi[j]}')
+        max_index = j
+
+# WRITE TO ANALYSIS TEXT FILE
 
 
-
+txtpath = os.path.join("PyPoll","Analysis", "analysis.txt")
+with open(txtpath, 'w') as outfile:
+    outfile.write("Election Results \n")
+    outfile.write("----------------------------- \n")
+    outfile.write(f'Total Vote: {vote} \n')
+    outfile.write("----------------------------- \n")
+    outfile.write(f'Khan: {voteper_Khan:.3f}% ({vote_Khan}) \n')
+    outfile.write(f'Correy: {voteper_Correy:.3f}% ({vote_Correy}) \n')
+    outfile.write(f'Li: {voteper_Li:.3f}% ({vote_Li}) \n')
+    outfile.write(f"O'Tooley: {voteper_Tooley:.3f}% ({vote_Tooley}) \n")
+    outfile.write("------------------------------ \n")
+    outfile.write(f'Winner: {candi[max_index]} \n')
+    outfile.write("------------------------------ \n")
