@@ -2,7 +2,7 @@ import os
 import csv
 
 dirname = os.path.dirname(__file__)
-csvpath = os.path.join(dirname, 'Resources', 'budget_data.csv')
+csvpath = os.path.join(dirname,'Resources', 'budget_data.csv')
 
 new_month = []
 total_month = 0
